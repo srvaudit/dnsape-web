@@ -8,7 +8,11 @@ RUN git clone https://github.com/srvaudit/dnsape.git /var/www/dnsape
 
 # vhost
 RUN rm /etc/nginx/conf.d/default.conf
-COPY dnsape.com.conf /etc/nginx/conf.d/dnsape.com.conf
+COPY dnsape.com.conf /etc/nginx/conf.d/dnsape.com.conf.template
 
 # ssl
 RUN mkdir /etc/nginx/ssl
+
+COPY start.sh /start.sh
+ENTRYPOINT ["/start.sh"]
+CMD ["nginx", "-g", "daemon off;"]
